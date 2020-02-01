@@ -1,24 +1,19 @@
-# use inheritance
 from engine import Engine
-
+# use inheritance
 # one class per room
 class BaseRoom(object):
-    self.keyword = None
 
-    def observe_room(self, description):
-        print(description)
+    def __init__(self):
+        self.keyword = None
 
 class RoomOne(BaseRoom):
-    self.keyword = 'life'
-    super(RoomOne, self).observe_room(
-    """Dummy Text"""
-    )
+    pass
 
 class RoomTwo(BaseRoom):
-    self.keyword = 'begins'
+    pass
 
 class RoomThree(BaseRoom):
-    self.keyword = 'here'
+    pass
 
 class FinalRoom(BaseRoom):
     pass
