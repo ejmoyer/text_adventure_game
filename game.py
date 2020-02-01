@@ -1,22 +1,5 @@
-from engine import Engine
-# use inheritance
-# one class per room
-class BaseRoom(object):
+from engine import *
 
-    def __init__(self):
-        self.keyword = None
-
-class RoomOne(BaseRoom):
-    pass
-
-class RoomTwo(BaseRoom):
-    pass
-
-class RoomThree(BaseRoom):
-    pass
-
-class FinalRoom(BaseRoom):
-    pass
-
-game = Engine()
+game_map = Map('room_one')
+game = Engine(game_map)
 game.run()
