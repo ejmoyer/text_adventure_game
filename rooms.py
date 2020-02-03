@@ -19,8 +19,11 @@ class RoomTwo(Room):
         print("Room Two Description")
 
 class RoomThree(Room):
+    final_answer = None
     def desc(self):
         print("Room Three Description")
+        final_answer = input("""In existance, only two things are in balance.
+        Speak truth, and pass. Speak falsehood, and be judged. """)
 
 class FinalRoom(Room):
     def desc(self):

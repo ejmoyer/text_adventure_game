@@ -26,11 +26,14 @@ class Engine(object):
             elif answer == '3':
                 self.test = RoomThree()
                 self.test.desc()
-            elif answer == '4':
-                self.test = FinalRoom()
-                self.test.desc()
-                self.test = 'end'
+                break
             else:
                 print("That room doesn't exist.")
+
+        if self.test.final_answer == "Life and Death" or "Life, Death" or "Life Death":
+            self.test = FinalRoom()
+            self.test.desc()
+            self.test = 'end'
+
         #allow for input
         #change scene depending on input
