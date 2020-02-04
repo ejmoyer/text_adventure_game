@@ -1,4 +1,5 @@
 from rooms import *
+from os.path import exists
 
 class Map(object):
 
@@ -15,10 +16,17 @@ class Engine(object):
         self.map = map
 
     def run(self):
-        self.map = RoomOne()
-        print("Welcome to my game! Say 'OBSERVE' to get your bearings!")
-        current_number = '1'
-        self.map.actions()
+
+        if exists('save.txt') == False: #make it save an external file and check for its existence
+            self.map = RoomOne()
+            print("Welcome to my game! Say 'OBSERVE' to get your bearings!")
+            current_number = '1'
+            self.map.actions()
+        else:
+            save_file = open('save.txt', 'r')
+            current_number = save_file.readline()
+            #self.map = 
+            #self.map.actions()
 
         while self.map != 'end':
 
@@ -27,7 +35,12 @@ class Engine(object):
                 self.map.actions()
 
             elif self.map.next_action == 'SAVE':
-                pass
+                save_file = open('save.txt', 'w')
+                save_information = f"{current_number}\n {self.map}"
+
+                save_file.write(save_information)
+                save_file.close()
+                break
 
             elif self.map.next_action == 'CHANGE ROOM':
                 answer = input("What room? 1, 2 or 3? ")
@@ -55,7 +68,12 @@ class Engine(object):
                     print("That room doesn't exist.")
 
             elif self.map.next_action == 'HELP':
-                print(self.map.instructions)
+                print("""
+                OBSERVE describes your surroundings,
+                SAVE saves your progress. CHANGE ROOM will
+                let you move around the map. HELP will display
+                this message.
+                """)
                 self.map.actions()
 
             else:

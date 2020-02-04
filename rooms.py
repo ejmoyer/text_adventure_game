@@ -2,14 +2,6 @@
 # one class per room
 class Room(object):
 
-    def __init__(self):
-        self.instructions = """
-        OBSERVE describes your surroundings,
-        SAVE saves your progress. CHANGE ROOM will
-        let you move around the map. HELP will display
-        this message.
-        """
-
     def desc(self):
         self.keyword = None
         print("Enter room info here.")
