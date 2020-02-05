@@ -10,7 +10,7 @@ class Room(object):
         print("Enter room info here.")
 
     def actions(self):
-        self.next_action = input("OBSERVE, SAVE, CHANGE ROOM, HELP ")
+        self.next_action = input("OBSERVE, SAVE, CHANGE ROOM, HELP, EXIT ")
 
 class RoomOne(Room):
 
@@ -28,7 +28,7 @@ class RoomThree(Room):
         print("Room Three Description")
 
     def actions(self):
-        self.next_action = input("OBSERVE, APPROACH GATE, SAVE, CHANGE ROOM, HELP ")
+        self.next_action = input("OBSERVE, APPROACH GATE, SAVE, CHANGE ROOM, HELP, EXIT ")
         if self.next_action == "APPROACH GATE":
             self.final_answer = input("""In existance, only two things are in balance.
             Speak truth, and pass. Speak falsehood, and be judged. """)

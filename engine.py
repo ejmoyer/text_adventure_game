@@ -77,6 +77,9 @@ class Engine(object):
                 """)
                 self.map.current_room.actions()
 
+            elif self.map.current_room.next_action == 'EXIT':
+                exit()
+
             else:
                 print("Error!")
                 break
