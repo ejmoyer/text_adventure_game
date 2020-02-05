@@ -2,6 +2,9 @@
 # one class per room
 class Room(object):
 
+    def __init__(self, room_name):
+        self.room_name = room_name
+
     def desc(self):
         self.keyword = None
         print("Enter room info here.")
@@ -12,22 +15,23 @@ class Room(object):
 class RoomOne(Room):
 
     def desc(self):
-        self.keyword = 'life'
         print("Room One Description")
 
 class RoomTwo(Room):
 
     def desc(self):
-        self.keyword = 'death'
         print("Room Two Description")
 
 class RoomThree(Room):
 
     def desc(self):
-        #self.final_answer = None
         print("Room Three Description")
-        #self.final_answer = input("""In existance, only two things are in balance.
-        #Speak truth, and pass. Speak falsehood, and be judged. """)
+
+    def actions(self):
+        self.next_action = input("OBSERVE, APPROACH GATE, SAVE, CHANGE ROOM, HELP ")
+        if self.next_action == "APPROACH GATE":
+            self.final_answer = input("""In existance, only two things are in balance.
+            Speak truth, and pass. Speak falsehood, and be judged. """)
 
 class FinalRoom(Room):
     def desc(self):

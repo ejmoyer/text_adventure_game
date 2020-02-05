@@ -1,14 +1,21 @@
 from rooms import *
 from os.path import exists
+from sys import exit
 
 class Map(object):
 
-    def __init__(self, start):
-        self.current_scene = start
+    rooms = {
+        'portal': RoomOne('portal'),
+        'overgrown area': RoomTwo('overgrown area'),
+        'dead end': RoomThree('dead end')
+    }
 
-    def change_scene(self, scene_name):
-        self.previous_scene = self.current_scene
-        self.current_scene = scene_name
+    def __init__(self, start):
+        self.current_room = Map.rooms.get(start)
+
+    def change_scene(self, room_name):
+        self.current_room = Map.rooms.get(room_name)
+        print(self.current_room)
 
 class Engine(object):
 
@@ -17,72 +24,66 @@ class Engine(object):
 
     def run(self):
 
-        if exists('save.txt') == False: #make it save an external file and check for its existence
-            self.map = RoomOne()
-            print("Welcome to my game! Say 'OBSERVE' to get your bearings!")
-            current_number = '1'
-            self.map.actions()
+        print("""
+        Welcome to my game!
+        Type NEW to start a new game.
+        Type LOAD to load a previous save.
+        Type CREDITS to see who made this game!
+        Type EXIT to exit the game.""")
+
+        start_question = input("> ")
+
+        if start_question == "NEW":
+            print("Type 'OBSERVE' to get your bearings!")
+            self.map.current_room.actions()
+
+        elif start_question == "LOAD":
+            if exists('save.txt') == True: #make it save an external file and check for its existence
+                save_file = open('save.txt', 'r')
+                self.map.current_room = Map.rooms.get(save_file.readline())
+                self.map.current_room.actions()
+
+        elif start_question == "EXIT":
+            exit()
+
         else:
-            save_file = open('save.txt', 'r')
-            current_number = save_file.readline()
-            #self.map = 
-            #self.map.actions()
+            print('Error!')
 
         while self.map != 'end':
 
-            if self.map.next_action == 'OBSERVE':
-                self.map.desc()
-                self.map.actions()
+            if self.map.current_room.next_action == 'OBSERVE':
+                self.map.current_room.desc()
+                self.map.current_room.actions()
 
-            elif self.map.next_action == 'SAVE':
+            elif self.map.current_room.next_action == 'SAVE':
                 save_file = open('save.txt', 'w')
-                save_information = f"{current_number}\n {self.map}"
+                save_information = f"{self.map.current_room.room_name}"
 
                 save_file.write(save_information)
                 save_file.close()
                 break
 
-            elif self.map.next_action == 'CHANGE ROOM':
-                answer = input("What room? 1, 2 or 3? ")
+            elif self.map.current_room.next_action == 'CHANGE ROOM':
+                next_room = input("PORTAL, OVERGROWN AREA, DEAD END ").lower()
+                self.map.change_scene(next_room)
+                self.map.current_room.actions()
 
-                if answer == current_number:
-                    print("I am already here.")
-
-                elif answer == '1':
-                    self.map = RoomOne()
-                    current_number = '1'
-                    self.map.actions()
-
-                elif answer == '2':
-                    self.map = RoomTwo()
-                    current_number = '2'
-                    self.map.actions()
-
-                elif answer == '3':
-                    self.map = RoomThree()
-                    current_number = '3'
-                    self.map.actions()
-                    break
-
-                else:
-                    print("That room doesn't exist.")
-
-            elif self.map.next_action == 'HELP':
+            elif self.map.current_room.next_action == 'HELP':
                 print("""
                 OBSERVE describes your surroundings,
                 SAVE saves your progress. CHANGE ROOM will
                 let you move around the map. HELP will display
                 this message.
                 """)
-                self.map.actions()
+                self.map.current_room.actions()
 
             else:
                 print("Error!")
                 break
 
-    #    if self.map.final_answer == "Life and Death" or "Life, Death" or "Life Death":
+    #    if self.map.current_room.final_answer == "Life and Death" or "Life, Death" or "Life Death":
     #        self.map = FinalRoom()
-    #        self.map.desc()
+    #        self.map.current_room.desc()
     #        self.map = 'end'
     #    else:
     #        print("The room fills with fire and you burn to death.")
