@@ -80,13 +80,3 @@ class Engine(object):
             else:
                 print("Error!")
                 break
-
-    #    if self.map.current_room.final_answer == "Life and Death" or "Life, Death" or "Life Death":
-    #        self.map = FinalRoom()
-    #        self.map.current_room.desc()
-    #        self.map = 'end'
-    #    else:
-    #        print("The room fills with fire and you burn to death.")
-
-        #allow for input
-        #change scene depending on input
