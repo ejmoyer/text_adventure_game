@@ -1,21 +1,22 @@
-from rooms import *
+from rooms import Portal, Overgrown, Gate, Temple, Underworld
 from os.path import exists
 from sys import exit
 
 class Map(object):
 
-    rooms = {
-        'portal': RoomOne('portal'),
-        'overgrown area': RoomTwo('overgrown area'),
-        'dead end': RoomThree('dead end'),
-        'deserted temple': RoomFour('deserted temple'),
-        'machine underworld': RoomFive('machine underworld')
+    rooms = { #contains room names for change_scene to use
+        'portal': Portal('portal'),
+        'overgrown area': Overgrown('overgrown area'),
+        'dead end': Gate('dead end'),
+        'deserted temple': Temple('deserted temple'),
+        'machine underworld': Underworld('machine underworld')
     }
 
     def __init__(self, start):
         self.current_room = Map.rooms.get(start)
 
     def change_scene(self, room_name):
+        """Changes the current scene to the argument given."""
         self.current_room = Map.rooms.get(room_name)
 
 class Engine(object):
@@ -24,6 +25,7 @@ class Engine(object):
         self.map = map
 
     def run(self):
+        """Starts the game."""
 
         print("""
         Welcome to my game!
@@ -35,13 +37,13 @@ class Engine(object):
 
         if start_question == "NEW":
             print("Type 'OBSERVE' to get your bearings!")
-            self.map.current_room.actions()
+            self.map.current_room.take_action()
 
         elif start_question == "LOAD":
             if exists('save.txt') == True:
                 save_file = open('save.txt', 'r')
                 self.map.current_room = Map.rooms.get(save_file.readline())
-                self.map.current_room.actions()
+                self.map.current_room.take_action()
 
         elif start_question == "EXIT":
             exit()
@@ -52,8 +54,8 @@ class Engine(object):
         while self.map != 'end':
 
             if self.map.current_room.next_action == 'OBSERVE':
-                self.map.current_room.desc()
-                self.map.current_room.actions()
+                self.map.current_room.describe()
+                self.map.current_room.take_action()
 
             elif self.map.current_room.next_action == 'SAVE':
                 save_file = open('save.txt', 'w')
@@ -71,7 +73,7 @@ class Engine(object):
                 else:
                     next_room = input("PORTAL ").lower()
                 self.map.change_scene(next_room)
-                self.map.current_room.actions()
+                self.map.current_room.take_action()
 
             elif self.map.current_room.next_action == 'HELP':
                 print("""
@@ -80,7 +82,7 @@ class Engine(object):
                 let you move around the map. HELP will display
                 this message.
                 """)
-                self.map.current_room.actions()
+                self.map.current_room.take_action()
 
             elif self.map.current_room.next_action == 'EXIT':
                 exit()

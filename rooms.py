@@ -5,15 +5,17 @@ class Room(object):
     def __init__(self, room_name):
         self.room_name = room_name
 
-    def desc(self):
+    def describe(self):
+        """Provides a description for OBSERVE."""
         print("Enter room info here.")
 
-    def actions(self):
+    def take_action(self):
+        """Provides a prompt to decide what happens next"""
         self.next_action = input("OBSERVE, SAVE, CHANGE ROOM, HELP, EXIT ")
 
-class RoomOne(Room):
+class Portal(Room):
 
-    def desc(self):
+    def describe(self):
         print("""
         A large connecting room, with many doors on all sides leading to
         other unknown realms. In the center lies an ancient statue, it's head
@@ -21,7 +23,7 @@ class RoomOne(Room):
         side, with a small broken scale in hand.
         """)
 
-    def actions(self):
+    def take_action(self):
         self.next_action = input("OBSERVE, EXAMINE STATUE, SAVE, CHANGE ROOM, HELP, EXIT ")
         if self.next_action == "EXAMINE STATUE":
             print("""
@@ -30,21 +32,21 @@ class RoomOne(Room):
             the statue being a skeleton, the other half with skin and looking
             much more human. The inscription reads 'Taviin, God of Balance'.
             """)
-            self.actions()
+            self.take_action()
         else:
             pass
 
 
-class RoomTwo(Room):
+class Overgrown(Room):
 
-    def desc(self):
+    def describe(self):
         print("""
         The area has a huge tree in the center, with a large
         hole bored into the center of it, looks like some sort of
         energy in the middle of the hole. The rest of the area is
         overgrown and covered in roots from the large tree.""")
 
-    def actions(self):
+    def take_action(self):
         self.next_action = input("OBSERVE, EXAMINE TREE, SAVE, CHANGE ROOM, HELP, EXIT ")
         if self.next_action == 'EXAMINE TREE':
             print("""
@@ -54,13 +56,13 @@ class RoomTwo(Room):
             plants are shriveled and it is noticibly colder. A skull is
             formed by the energy in the hole of the tree, maybe the tree
             is actually taking energy from the area instead?""")
-            self.actions()
+            self.take_action()
         else:
             pass
 
-class RoomThree(Room):
+class Gate(Room):
 
-    def desc(self):
+    def describe(self):
         print("""
         A huge atrium with many gateways, every one of them broken, unusable.
         A rusted gate is at the end of the atrium, with glyphs imprinted
@@ -68,7 +70,7 @@ class RoomThree(Room):
         says 'LIFE'.
         """)
 
-    def actions(self):
+    def take_action(self):
         self.next_action = input("OBSERVE, APPROACH GATE, SAVE, CHANGE ROOM, HELP, EXIT ")
         if self.next_action == "APPROACH GATE":
             self.answer_riddle = input("""
@@ -97,20 +99,20 @@ class RoomThree(Room):
                     """)
                     exit()
             else:
-                self.actions()
+                self.take_action()
         else:
             pass
 
-class RoomFour(Room):
+class Temple(Room):
 
-    def desc(self):
+    def describe(self):
         print("""
         The sand dunes span for miles, this temple is deserted, but the
         sound of chanting in the distance is carried by the wind. The
         statues look like the same statue in the middle of the portal room.
         """)
 
-    def actions(self):
+    def take_action(self):
         self.next_action = input("OBSERVE, LISTEN CLOSER, SAVE, CHANGE ROOM, HELP, EXIT ")
         if self.next_action == 'LISTEN CLOSER':
             print("""
@@ -119,13 +121,13 @@ class RoomFour(Room):
             ascend beyond this world somehow? Perhaps the chanting
             comes from those who accomplished their goal..
             """)
-            self.actions()
+            self.take_action()
         else:
             pass
 
-class RoomFive(Room):
+class Underworld(Room):
 
-    def desc(self):
+    def describe(self):
         print("""
         Wires span across the ceiling of this underground. The sound of
         metal moving throughout the tunnels of this area. The stench of
@@ -133,7 +135,7 @@ class RoomFive(Room):
         light close to you draws your attention.
         """)
 
-    def actions(self):
+    def take_action(self):
         self.next_action = input("OBSERVE, APPROACH LIGHT, SAVE, CHANGE ROOM, HELP, EXIT ")
         if self.next_action == 'APPROACH LIGHT':
             print("""
@@ -141,6 +143,6 @@ class RoomFive(Room):
             discarded robotic shell, a small broken status screen nearby
             displays 'IMBALANCE' in bright red letters.
             """)
-            self.actions()
+            self.take_action()
         else:
             pass
