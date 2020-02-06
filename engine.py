@@ -7,7 +7,9 @@ class Map(object):
     rooms = {
         'portal': RoomOne('portal'),
         'overgrown area': RoomTwo('overgrown area'),
-        'dead end': RoomThree('dead end')
+        'dead end': RoomThree('dead end'),
+        'deserted temple': RoomFour('deserted temple'),
+        'machine underworld': RoomFive('machine underworld')
     }
 
     def __init__(self, start):
@@ -15,7 +17,6 @@ class Map(object):
 
     def change_scene(self, room_name):
         self.current_room = Map.rooms.get(room_name)
-        print(self.current_room)
 
 class Engine(object):
 
@@ -28,7 +29,6 @@ class Engine(object):
         Welcome to my game!
         Type NEW to start a new game.
         Type LOAD to load a previous save.
-        Type CREDITS to see who made this game!
         Type EXIT to exit the game.""")
 
         start_question = input("> ")
@@ -38,7 +38,7 @@ class Engine(object):
             self.map.current_room.actions()
 
         elif start_question == "LOAD":
-            if exists('save.txt') == True: #make it save an external file and check for its existence
+            if exists('save.txt') == True:
                 save_file = open('save.txt', 'r')
                 self.map.current_room = Map.rooms.get(save_file.readline())
                 self.map.current_room.actions()
@@ -64,7 +64,12 @@ class Engine(object):
                 break
 
             elif self.map.current_room.next_action == 'CHANGE ROOM':
-                next_room = input("PORTAL, OVERGROWN AREA, DEAD END ").lower()
+                if self.map.current_room.room_name == 'portal':
+                    next_room = input("""
+                    PORTAL, OVERGROWN AREA, DESERTED TEMPLE,
+                    MACHINE UNDERWORLD, DEAD END """).lower()
+                else:
+                    next_room = input("PORTAL ").lower()
                 self.map.change_scene(next_room)
                 self.map.current_room.actions()
 
